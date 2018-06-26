@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+option go_package = "github.com/pokstad/whisper";
+
+message Secret {
+  string recipient_alias = 1;
+  string message = 2;
+}
+
+message Identity {
+  string alias = 1;
+  string addr = 2;
+}
+
+service Whisperer {
+  // Handshake exchanges aliases between servers
+  rpc Handshake(Identity) returns (Identity) {}
+  
+  // Whisper requests a message to be sent to a server with the given alias
+  rpc Whisper(Secret) returns (google.protobuf.Empty) {}
+}
